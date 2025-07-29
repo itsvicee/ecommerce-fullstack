@@ -1,141 +1,93 @@
 # TechTienda - Plataforma de E-commerce Full-Stack
 
-TechTienda es una aplicación web completa de comercio electrónico construida desde cero. Este proyecto integra un frontend moderno y reactivo con un backend robusto y seguro, demostrando un ciclo de desarrollo full-stack de extremo a extremo, desde el registro de usuarios hasta el procesamiento de órdenes y la actualización de inventario.
+![Demostración de TechTienda](https://i.imgur.com/example.gif) <!-- Reemplazar con un GIF de tu aplicación -->
 
-## ✨ Funcionalidades Clave
+Una plataforma de e-commerce completa y moderna construida con el stack PERN (PostgreSQL, Express, React, Node.js) y totalmente contenerizada con Docker para un despliegue y desarrollo consistentes.
 
-* **Autenticación de Usuarios:** Registro seguro de usuarios con contraseñas encriptadas (bcrypt) y login con JSON Web Tokens (JWT).
-* **Catálogo de Productos:** Visualización de productos obtenidos desde la API, con rutas dinámicas para las páginas de detalle.
-* **Carrito de Compras Persistente:** Añade, gestiona las cantidades y elimina productos del carrito, con estado guardado en el `localStorage` para persistir la sesión.
-* **Gestión de Stock:** El sistema valida el stock disponible desde la base de datos antes de permitir añadir productos al carrito.
-* **Checkout y Creación de Órdenes:** Flujo de compra completo que registra la orden y sus ítems en la base de datos dentro de una transacción, actualizando el stock de los productos de forma atómica.
-* **Diseño Totalmente Responsivo:** Interfaz construida con Tailwind CSS bajo el principio "mobile-first", completamente adaptable a cualquier tamaño de pantalla.
+**Visita la Demo en Vivo:** [Enlace a tu demo desplegada] <!-- Añadirás esto en un futuro paso -->
+
+---
+
+## 🚀 Características Principales
+
+* **Autenticación Segura:** Sistema de registro e inicio de sesión de usuarios con JSON Web Tokens (JWT).
+* **Catálogo de Productos:** Visualización de productos obtenidos desde la API.
+* **Páginas de Detalle:** Rutas dinámicas para mostrar información específica de cada producto.
+* **Carrito de Compras Persistente:** Añade, elimina y gestiona la cantidad de productos en el carrito, con estado guardado en el navegador.
+* **Proceso de Checkout Simulado:** Flujo completo para confirmar una orden y registrarla en la base de datos.
+* **Entorno Contenerizado:** Toda la aplicación (Frontend, Backend, Base de Datos) está orquestada con Docker Compose para una configuración instantánea.
+* **Reverse Proxy con Nginx:** Configuración de producción que sirve tanto el frontend como el backend bajo un mismo dominio, mejorando la seguridad y la eficiencia.
+
+---
 
 ## 🛠️ Stack Tecnológico
 
-| Área          | Tecnología                                                                                                                                                                                                                                                        |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Frontend** | ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white) ![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white) ![React Router](https://img.shields.io/badge/-React_Router-CA4245?logo=react-router&logoColor=white) |
-| **Backend** | ![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white) ![JWT](https://img.shields.io/badge/-JWT-000000?logo=json-web-tokens&logoColor=white)                                                                                                         |
-| **Base de Datos** | ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4169E1?logo=postgresql&logoColor=white)                                                                                                                                                                   |
-| **Herramientas** | ![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white) ![VSCode](https://img.shields.io/badge/-VSCode-007ACC?logo=visual-studio-code&logoColor=white) ![Postman](https://img.shields.io/badge/-Postman-FF6C37?logo=postman&logoColor=white)                                                                                                         |
+### Backend
+* **Node.js** con **Express.js** para el servidor API.
+* **PostgreSQL** como base de datos relacional.
+* **JWT (JSON Web Token)** para la autenticación.
+* `bcrypt.js` para el hasheo seguro de contraseñas.
+* `pg` como cliente de PostgreSQL para Node.js.
 
-## 🚀 Instalación y Ejecución Local
+### Frontend
+* **React.js** (con Vite) para una interfaz de usuario rápida y reactiva.
+* **React Router DOM** para el enrutamiento del lado del cliente.
+* **Tailwind CSS** para un diseño moderno y responsivo.
+* **React Context API** para la gestión del estado global (autenticación y carrito).
+* **Axios** para las peticiones HTTP al backend.
 
-Sigue estos pasos para ejecutar el proyecto en tu máquina local.
+### DevOps
+* **Docker & Docker Compose** para la contenerización y orquestación del entorno.
+* **Nginx** como servidor web y reverse proxy en producción.
+
+---
+
+## 🏁 Cómo Empezar (Modo Docker - Recomendado)
+
+Este método levanta toda la aplicación (frontend, backend, y base de datos) con un solo comando. Es la forma recomendada y profesional de ejecutar el proyecto.
 
 ### Prerrequisitos
+* Tener **Docker** y **Docker Compose** instalados.
+* Asegurarse de que la aplicación **Docker Desktop** esté corriendo.
 
-* Node.js (v18 o superior)
-* npm
-* PostgreSQL
+### Pasos
+1.  **Clona el repositorio:**
+    ```bash
+    git clone [https://github.com/tu_usuario/ecommerce-fullstack.git](https://github.com/tu_usuario/ecommerce-fullstack.git)
+    cd ecommerce-fullstack
+    ```
 
-### 1. Configuración del Backend
+2.  **Crea el archivo de variables de entorno:**
+    Crea un archivo llamado `.env` en la raíz del proyecto y copia el contenido de `.env.example`.
+    ```bash
+    # No es necesario cambiar nada para el modo Docker,
+    # docker-compose se encargará de todo.
+    ```
 
-```bash
-# Clona el repositorio
-git clone [https://github.com/itsvicee/ecommerce-fullstack.git](https://github.com/tu-usuario/ecommerce-fullstack.git)
-cd ecommerce-fullstack/backend
+3.  **Levanta la aplicación:**
+    ```bash
+    docker-compose up --build
+    ```
+    La primera vez, esto puede tardar unos minutos mientras se construyen las imágenes.
 
-# Instala las dependencias
-npm install
+4.  **¡Listo!**
+    * La aplicación estará disponible en `http://localhost`.
+    * La API del backend estará disponible en `http://localhost/api` (manejado por el reverse proxy).
 
-# Crea y configura tu archivo .env
-# Renombra .env.example a .env y añade tus credenciales de PostgreSQL
-cp .env.example .env
-```
+---
 
-### 2. Configuración de la Base de Datos
+## 📦 Poblando la Base de Datos
 
-Asegúrate de que tu servicio de PostgreSQL esté corriendo.
+La base de datos del contenedor se inicia vacía. Para ver productos, necesitas crearlos a través de la API.
 
-```bash
-# Conéctate a psql o abre una herramienta de BD como pgAdmin
-# y ejecuta los siguientes comandos SQL:
+1.  Usa **Postman** (o una herramienta similar) para registrar un nuevo usuario: `POST http://localhost/api/auth/register`.
+2.  Inicia sesión con ese usuario para obtener un token: `POST http://localhost/api/auth/login`.
+3.  Usa ese token (como Bearer Token) para crear un nuevo producto: `POST http://localhost/api/products`.
 
-# 1. Crea la base de datos
-CREATE DATABASE ecommerce_db;
+¡Ahora recarga la página y verás tus productos!
 
-# 2. Conéctate a la nueva base de datos y crea las tablas
-\c ecommerce_db
+---
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(100),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
+## 📜 Licencia
 
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price NUMERIC(10, 2) NOT NULL,
-    stock INTEGER NOT NULL DEFAULT 0,
-    image_url VARCHAR(255),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE orders (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
-    total_amount NUMERIC(10, 2) NOT NULL,
-    status VARCHAR(50) DEFAULT 'pending',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE order_items (
-    id SERIAL PRIMARY KEY,
-    order_id INTEGER NOT NULL REFERENCES orders(id),
-    product_id INTEGER NOT NULL REFERENCES products(id),
-    quantity INTEGER NOT NULL,
-    price NUMERIC(10, 2) NOT NULL
-);
-```
-
-### 3. Configuración del Frontend
-
-```bash
-# Desde la raíz, navega a la carpeta del frontend
-cd ../frontend
-
-# Instala las dependencias
-npm install
-```
-
-### 4. Ejecutar la Aplicación
-
-Necesitarás dos terminales abiertas.
-
-Terminal 1 (Backend):
-```bash
-cd backend
-npm run dev
-# El servidor backend estará corriendo en http://localhost:5000
-```
-Terminal 2 (Frontend):
-```bash
-cd frontend
-npm run dev
-# La aplicación de React se abrirá en http://localhost:5173
-```
-
-### 5. Poblar la Base de Datos (¡Importante!)
-
-La base de datos estará vacía al inicio. Para ver productos, necesitas:
-
-1. Registrar un Usuario a través de la interfaz de la aplicación.
-
-2. Crear Productos usando la API. Puedes usar Postman o una herramienta similar para hacer una solicitud POST a http://localhost:5000/api/products (recuerda iniciar sesión primero para obtener un token y añadirlo como Bearer Token en la cabecera de autorización).
-
-Ejemplo de Body para crear un producto:
-```bash
-{
-    "name": "Laptop Gamer XYZ",
-    "description": "Potente laptop para gaming y desarrollo con 32GB de RAM y RTX 4080.",
-    "price": 1999.99,
-    "stock": 10,
-    "image_url": "[https://una-url-de-imagen-real.com/imagen.jpg](https://una-url-de-imagen-real.com/imagen.jpg)"
-}
-```
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.

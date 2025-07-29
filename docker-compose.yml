@@ -1,0 +1,53 @@
+# docker-compose.yml (CORREGIDO)
+
+services:
+  # Servicio de la Base de Datos
+  postgres:
+    image: postgres:13-alpine
+    container_name: mi_postgres_db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      # Montamos TODA la carpeta de inicialización.
+      # Docker ejecutará cualquier archivo .sql que encuentre aquí.
+      - ./db_init:/docker-entrypoint-initdb.d
+      # Mantenemos la persistencia de los datos
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Servicio del Backend
+  backend:
+    build: ./backend
+    container_name: mi_backend_api
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USER: ${DB_USER}
+      DB_HOST: postgres
+      DB_DATABASE: ${DB_DATABASE}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: 5432
+      JWT_SECRET: ${JWT_SECRET}
+    restart: unless-stopped
+
+  # Servicio del Frontend
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://backend:5000/api
+    container_name: mi_frontend_app
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

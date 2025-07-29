@@ -1,27 +1,32 @@
 // src/pages/HomePage.jsx
 import React, { useState, useEffect } from 'react';
-import { productService } from '../services/api'; // Importamos el servicio de productos
-import ProductCard from '../components/ProductCard'; // Importamos el componente de tarjeta
+import { productService } from '../services/api';
+import ProductCard from '../components/ProductCard';
 
 const HomePage = () => {
-  // Estado para almacenar la lista de productos
   const [products, setProducts] = useState([]);
-  // Estado para saber si la página está cargando
   const [loading, setLoading] = useState(true);
-  // Estado para manejar cualquier error que ocurra
   const [error, setError] = useState(null);
 
-  // useEffect se ejecuta cuando el componente se monta por primera vez
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         setError(null);
-        // Llamamos a la función de nuestro servicio para obtener los productos
         const response = await productService.getAll();
-        setProducts(response.data);
+        
+        // --- ¡CORRECCIÓN CLAVE! ---
+        // Verificamos si la respuesta es un array antes de actualizar el estado.
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          // Si no es un array, lo tratamos como un error.
+          console.error("La API no devolvió un array de productos:", response.data);
+          setProducts([]); // Nos aseguramos de que products siga siendo un array vacío.
+        }
+
       } catch (err) {
-        setError('No se pudieron cargar los productos. Inténtalo de nuevo más tarde.');
+        setError('No se pudieron cargar los productos. El servidor puede estar iniciándose. Inténtalo de nuevo en un momento.');
         console.error(err);
       } finally {
         setLoading(false);
@@ -29,14 +34,12 @@ const HomePage = () => {
     };
 
     fetchProducts();
-  }, []); // El array vacío asegura que esto se ejecute solo una vez
+  }, []);
 
-  // Si está cargando, mostramos un mensaje
   if (loading) {
     return <div className="text-center p-10"><p>Cargando productos...</p></div>;
   }
 
-  // Si hay un error, mostramos el error
   if (error) {
     return <div className="text-center p-10 text-red-500"><p>{error}</p></div>;
   }
@@ -44,12 +47,15 @@ const HomePage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Nuestros Productos</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {/* Mapeamos el array de productos y renderizamos una ProductCard por cada uno */}
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {products.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500">No hay productos disponibles en este momento.</p>
+      )}
     </div>
   );
 };

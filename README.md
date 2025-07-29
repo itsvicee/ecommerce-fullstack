@@ -1,7 +1,5 @@
 # TechTienda - Plataforma de E-commerce Full-Stack
 
-![Demostración de TechTienda](https://i.imgur.com/example.gif) <!-- Reemplazar con un GIF de tu aplicación -->
-
 Una plataforma de e-commerce completa y moderna construida con el stack PERN (PostgreSQL, Express, React, Node.js) y totalmente contenerizada con Docker para un despliegue y desarrollo consistentes.
 
 **Visita la Demo en Vivo:** [Enlace a tu demo desplegada] <!-- Añadirás esto en un futuro paso -->

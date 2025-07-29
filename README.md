@@ -1,7 +1,5 @@
 # TechTienda - Plataforma de E-commerce Full-Stack
 
-![Demostración de TechTienda](https://i.imgur.com/Qk7c5zC.gif)
-
 TechTienda es una aplicación web completa de comercio electrónico construida desde cero. Este proyecto integra un frontend moderno y reactivo con un backend robusto y seguro, demostrando un ciclo de desarrollo full-stack de extremo a extremo, desde el registro de usuarios hasta el procesamiento de órdenes y la actualización de inventario.
 
 ## ✨ Funcionalidades Clave
@@ -111,13 +109,33 @@ npm install
 Necesitarás dos terminales abiertas.
 
 Terminal 1 (Backend):
-
+```bash
 cd backend
 npm run dev
 # El servidor backend estará corriendo en http://localhost:5000
-
+```
 Terminal 2 (Frontend):
-
+```bash
 cd frontend
 npm run dev
 # La aplicación de React se abrirá en http://localhost:5173
+```
+
+### 5. Poblar la Base de Datos (¡Importante!)
+
+La base de datos estará vacía al inicio. Para ver productos, necesitas:
+
+1. Registrar un Usuario a través de la interfaz de la aplicación.
+
+2. Crear Productos usando la API. Puedes usar Postman o una herramienta similar para hacer una solicitud POST a http://localhost:5000/api/products (recuerda iniciar sesión primero para obtener un token y añadirlo como Bearer Token en la cabecera de autorización).
+
+Ejemplo de Body para crear un producto:
+```bash
+{
+    "name": "Laptop Gamer XYZ",
+    "description": "Potente laptop para gaming y desarrollo con 32GB de RAM y RTX 4080.",
+    "price": 1999.99,
+    "stock": 10,
+    "image_url": "[https://una-url-de-imagen-real.com/imagen.jpg](https://una-url-de-imagen-real.com/imagen.jpg)"
+}
+```
